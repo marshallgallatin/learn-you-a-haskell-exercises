@@ -45,12 +45,12 @@ dropK k l = (take (k) l) ++ (drop (k+1) l)
 
 -- Extract elements between ith and kth element in list l. Including i, but not k
 -- For example, "slice 3 6 [0,0,0,1,2,3,0,0,0]" returns [1,2,3]
-slice i k l = undefined
+slice i k l = take (k-i) (drop i l)
 
 -- Insert element x in list l at index k
 -- For example, "insertElem 2 5 [0,0,0,0,0,0]" returns [0,0,0,0,0,2,0]
-insertElem x k l = undefined
+insertElem x k l = (take k l) ++ [x] ++ (drop k l)
 
 -- Rotate list l n places left.
 -- For example, "rotate 2 [1,2,3,4,5]" gives [3,4,5,1,2]
-rotate n l = undefined
+rotate n l = (drop n l) ++ (take n l)

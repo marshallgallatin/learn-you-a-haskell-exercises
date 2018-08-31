@@ -10,6 +10,7 @@ power x y
 -- 	     fib 1 = [1, 0]
 --	     fib 10 = [55,34,21,13,8,5,3,2,1,1,0]
 -- try to use a where clause
+-- performance in ghci using :set +s (0.01 secs, 227,696 bytes)
 fib :: (Num a, Eq a) => a -> [a]
 fib 0 = [0]
 fib x = fibCalc x : fib (x-1)
@@ -17,14 +18,16 @@ fib x = fibCalc x : fib (x-1)
          fibCalc 1 = 1
          fibCalc x = fibCalc (x-2) + fibCalc (x-1)
 
-{-
-This works, but not with the signature given:
-fib n = [fibCalc x | x <- [0 .. n]]
-   where fibCalc 0 = 0
-         fibCalc 1 = 1
-         fibCalc x = fibCalc (x-2) + fibCalc (x-1)
--}
-
+-- I didn't write this myself, but I knew it had to be possible, its what
+-- I wanted to do but couldn't get my head around. (I googled for other answers to this exercise)
+-- this function just calculates the fibbonaci sequence the straight forward way
+-- by adding the two previous fibbonaci numbers together
+-- its also faster and uses less memory that my solution above (0.00 secs, 77,672 bytes)
+fib' :: (Num a, Eq a) => a -> [a]
+fib' 0 = [0]
+fib' 1 = [1,0]
+fib' x = (a + b) : fibList
+   where fibList@(a:b:_) = fib' (x-1)
 
 -- This is not recursive, but have a go anyway.
 -- Create a function which takes two parameters, a number and a step

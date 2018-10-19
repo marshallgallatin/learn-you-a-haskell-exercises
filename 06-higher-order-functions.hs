@@ -19,17 +19,19 @@ sumSquares a b
 -- Define a higher order sum function which accepts an (Int -> Int) function to apply to all integers between two values.
 -- Again this should look similar to the sumInts and sumSquares functions
 higherOrderSum :: (Int -> Int) -> Int -> Int -> Int
-higherOrderSum intApplication a b = undefined
+higherOrderSum intApplication a b
+   | a == b = intApplication b
+   | otherwise = intApplication a + (higherOrderSum intApplication (a+1) b)
 
 -- Define the square sum in terms of higherOrderSum
 hoSumSquares :: Int -> Int -> Int
-hoSumSquares = undefined
+hoSumSquares = higherOrderSum sq
 
 -- Define the sum between two values in terms of higherOrderSum
 -- Note there is no parameter on the function definition
 -- Try to use a lambda if possible
 hoSumInts :: Int -> Int -> Int
-hoSumInts = undefined
+hoSumInts = higherOrderSum (\x->x)
 
 -- Create a new higher order method which generalises over the function provided by sumInts (That is, parameterize (+) :: Int -> Int -> Int) between a and b
 -- This will give the ability to perform utilities such as the prodcut of all squares (or any other Int -> Int function) between a and b

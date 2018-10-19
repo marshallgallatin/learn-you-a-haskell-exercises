@@ -3,7 +3,7 @@
 --          sumInts 1 3 = 6
 sumInts :: Int -> Int -> Int
 sumInts a b
-   | a == b = b
+   | a > b = 0
    | otherwise = a + sumInts (a+1) b
 
 -- Define a square function
@@ -13,14 +13,14 @@ sq x = x * x
 -- Sum the squares between two numbers. This function should be similar to the sumInts function
 sumSquares :: Int -> Int -> Int
 sumSquares a b
-   | a == b = sq b
+   | a > b = 0
    | otherwise = (sq a) + sumSquares (a+1) b
 
 -- Define a higher order sum function which accepts an (Int -> Int) function to apply to all integers between two values.
 -- Again this should look similar to the sumInts and sumSquares functions
 higherOrderSum :: (Int -> Int) -> Int -> Int -> Int
 higherOrderSum intApplication a b
-   | a == b = intApplication b
+   | a > b = 0
    | otherwise = intApplication a + (higherOrderSum intApplication (a+1) b)
 
 -- Define the square sum in terms of higherOrderSum
@@ -43,8 +43,11 @@ hoSumInts = higherOrderSum (\x->x)
 --  - A function to apply to each value, op :: Int -> Int
 --  - A function to apply between each value, f :: Int -> Int -> Int
 --  - A value to return in the base case when a > b, z :: Int
-higherOrderSequenceApplication = undefined
+higherOrderSequenceApplication :: (Int -> Int -> Int) -> (Int -> Int) -> Int -> Int -> Int -> Int
+higherOrderSequenceApplication f op z a b
+   | a > b = z
+   | otherwise = f (op a) (higherOrderSequenceApplication f op z (a+1) b)
 
 -- Define a factorial method using the higherOrderSequenceAppliction
 hoFactorial :: Int -> Int
-hoFactorial = undefined
+hoFactorial = higherOrderSequenceApplication (\x y -> x * y) (\x->x) 1 1

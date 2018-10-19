@@ -2,15 +2,19 @@
 -- Example: sumInts 0 1 = 1
 --          sumInts 1 3 = 6
 sumInts :: Int -> Int -> Int
-sumInts a b = undefined
+sumInts a b
+   | a == b = b
+   | otherwise = a + sumInts (a+1) b
 
 -- Define a square function
 sq :: Int -> Int
-sq x = undefined
+sq x = x * x
 
 -- Sum the squares between two numbers. This function should be similar to the sumInts function
 sumSquares :: Int -> Int -> Int
-sumSquares a b = undefined
+sumSquares a b
+   | a == b = sq b
+   | otherwise = (sq a) + sumSquares (a+1) b
 
 -- Define a higher order sum function which accepts an (Int -> Int) function to apply to all integers between two values.
 -- Again this should look similar to the sumInts and sumSquares functions
